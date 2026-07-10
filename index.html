@@ -171,13 +171,13 @@
 <h1 class="font-display-lg text-display-lg mb-6 leading-tight">Repuestos y reparación de maquinaria agrícola</h1>
 <p class="font-body-lg text-body-lg mb-10 opacity-90">Expertos en Formosa con alcance nacional e internacional a Paraguay. Garantizamos que su producción nunca se detenga con repuestos originales y servicio técnico especializado.</p>
 <div class="flex flex-col sm:flex-row gap-4">
-<button class="bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded font-label-md hover:brightness-110 transition-all flex items-center justify-center gap-2">
+<a class="bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded font-label-md hover:brightness-110 transition-all flex items-center justify-center gap-2" href="#contacto">
 <span class="material-symbols-outlined">description</span>
                             Solicitar presupuesto
-                        </button>
-<button class="border-2 border-white text-white px-8 py-4 rounded font-label-md hover:bg-white/10 transition-all">
+                        </a>
+<a class="border-2 border-white text-white px-8 py-4 rounded font-label-md hover:bg-white/10 transition-all flex items-center justify-center" href="#servicios">
                             Ver servicios
-                        </button>
+                        </a>
 </div>
 </div>
 </div>
@@ -497,48 +497,52 @@
 <div class="max-w-max-width mx-auto px-margin-desktop grid grid-cols-1 lg:grid-cols-3 gap-16">
 <div class="lg:col-span-2 bg-white p-10 rounded-xl shadow-sm border border-outline-variant">
 <h2 class="font-headline-lg text-headline-lg text-primary mb-8">Solicite su Cotización</h2>
-<form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6" id="quote-form">
 <div class="space-y-2">
 <label class="font-label-md text-secondary">Nombre Completo</label>
-<input class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary" type="text">
+<input class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary" name="nombre" required type="text">
 </div>
 <div class="space-y-2">
 <label class="font-label-md text-secondary">Provincia</label>
-<select class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary">
+<select class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary" name="provincia">
 <option>Formosa</option>
 <option>Chaco</option>
 <option>Santa Fe</option>
 <option>Córdoba</option>
+<option>Paraguay</option>
 <option>Otra...</option>
 </select>
 </div>
 <div class="space-y-2">
 <label class="font-label-md text-secondary">WhatsApp</label>
-<input class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary" placeholder="+54 9..." type="tel">
+<input class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary" name="whatsapp" placeholder="+54 9..." required type="tel">
 </div>
 <div class="space-y-2">
 <label class="font-label-md text-secondary">Marca/Modelo de Máquina</label>
-<input class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary" type="text">
+<input class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary" name="maquina" type="text">
 </div>
 <div class="md:col-span-2 space-y-2">
 <label class="font-label-md text-secondary">Descripción del Repuesto o Falla</label>
-<textarea class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary" rows="4"></textarea>
+<textarea class="w-full p-3 border border-outline rounded focus:ring-primary focus:border-primary" name="descripcion" rows="4"></textarea>
 </div>
 <div class="md:col-span-2">
-<label class="font-label-md text-secondary block mb-2">Subir Foto (Opcional)</label>
-<div class="border-2 border-dashed border-outline-variant rounded-lg p-8 text-center hover:bg-surface-container-lowest cursor-pointer transition-all">
+<label class="font-label-md text-secondary block mb-2">Fotos de la pieza (Opcional)</label>
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-8 text-center">
 <span class="material-symbols-outlined text-4xl text-outline mb-2">upload_file</span>
-<p class="text-sm text-secondary">Haga clic o arrastre fotos de la pieza dañada aquí</p>
+<p class="text-sm text-secondary">Al enviar, se abrirá WhatsApp: adjunte ahí las fotos de la pieza o falla.</p>
 </div>
 </div>
 <div class="md:col-span-2">
-<button class="w-full bg-primary text-white py-4 rounded font-headline-md hover:bg-primary-container transition-all active:scale-95">Enviar Solicitud</button>
+<button class="w-full bg-primary text-white py-4 rounded font-headline-md hover:bg-primary-container transition-all active:scale-95" type="submit">Enviar Solicitud</button>
 </div>
 </form>
 </div>
 <div class="space-y-12">
 <div class="bg-white rounded-xl border border-outline-variant overflow-hidden shadow-sm">
-<img alt="Local de AgrOsuna Servicios Agropecuarios en Laguna Blanca, Formosa" class="w-full h-48 object-cover" src="assets/gmaps-photo-2.jpg">
+<div class="grid grid-cols-2 gap-0.5">
+<img alt="Local de AgrOsuna Servicios Agropecuarios en Laguna Blanca, Formosa" class="w-full h-40 object-cover" src="assets/gmaps-photo-2.jpg">
+<img alt="Cartel de AgrOsuna sobre la Ruta Nacional 86, Laguna Blanca, Formosa" class="w-full h-40 object-cover" src="assets/gmaps-photo-1.jpg">
+</div>
 <div class="p-8">
 <h3 class="font-headline-md text-primary mb-6">Información de Contacto</h3>
 <div class="space-y-6">
@@ -645,6 +649,29 @@
                     behavior: 'smooth'
                 });
             });
+        });
+
+        // Quote form -> send request via WhatsApp
+        const quoteForm = document.getElementById('quote-form');
+        quoteForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const data = new FormData(quoteForm);
+            const nombre = (data.get('nombre') || '').trim();
+            const whatsapp = (data.get('whatsapp') || '').trim();
+            if (!nombre || !whatsapp) {
+                alert('Por favor completá tu nombre y WhatsApp para poder contactarte.');
+                return;
+            }
+            const lines = [
+                `Hola, soy ${nombre} y quiero solicitar un presupuesto.`,
+                `Provincia: ${data.get('provincia')}`,
+                `Mi WhatsApp: ${whatsapp}`,
+                (data.get('maquina') || '').trim() ? `Marca/Modelo de máquina: ${data.get('maquina').trim()}` : '',
+                (data.get('descripcion') || '').trim() ? `Descripción: ${data.get('descripcion').trim()}` : ''
+            ].filter(Boolean);
+            const mensaje = encodeURIComponent(lines.join('\n'));
+            window.open(`https://wa.me/5493718417471?text=${mensaje}`, '_blank');
+            quoteForm.reset();
         });
 
         // Basic Header interaction
